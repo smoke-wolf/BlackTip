@@ -1,8 +1,7 @@
-import http
+import http.server
 import json
-import socketserver
 import webbrowser
-
+import socketserver
 import folium
 import requests
 import time
@@ -68,9 +67,8 @@ def WHOIS():
         print('No input detected')
 
 def view_html_file_locally(html_file_path, port=8000):
-    # Start a simple HTTP server to serve the HTML file
-    Handler = http.server.SimpleHTTPRequestHandler
-    with socketserver.TCPServer(("", port), Handler) as httpd:
+    # Start a simple HTTP server in the current directory
+    with socketserver.TCPServer(("", port), http.server.SimpleHTTPRequestHandler) as httpd:
         print(f"Serving at http://localhost:{port}/")
 
         # Open the default web browser to view the HTML file
@@ -127,8 +125,5 @@ while True:
         print('[*] GeoIP Complete')
     elif '23' in option:
         print('[*] Launching MapView')
-        try:
-            generate_map()
-        except:
-            pass
+        generate_map()
         print('[*] MapView Complete')
